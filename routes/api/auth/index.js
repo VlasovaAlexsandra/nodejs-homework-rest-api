@@ -1,14 +1,10 @@
 import { Router } from 'express'
-import {
-    getContacts,
-    getContactById,
-    addContact,
-    removeContact,
-    updateContact
-} from '../../../controlers/contacts'
+import { registration, login, logout } from '../../../controlers/auth'
 
 const router = new Router()
 
-router.post('/', validateCreate, addContact)
+router.post('/registration', registration)
+router.post('/login', login)
+router.post('/logout', logout)
 
 export default router
