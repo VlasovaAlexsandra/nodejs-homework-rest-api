@@ -30,18 +30,23 @@ const login = async (req, res, next) => {
             json({
                 status: 'error',
                 code: HttpCode.UNAUTHORIZED,
-                message: 'Invalid credential'
+                message: 'Invalid credentials'
             })
     }
 
+    const token = authService.getToken(user)
+    await authService.setToken(user.id, token)
+
     res.
         status(HttpCode.OK).
-        json({ status: 'success', code: HttpCode.OK, data: {} })
+        json({ status: 'success', code: HttpCode.OK, data: { token } })
 }
 
 const logout = async (req, res, next) => {
-    console.log(req.query)
-    res.status(HttpCode.OK).json({ status: 'success', code: HttpCode.OK, data: {} })
+    await authService.setToken(req.user.id, null)
+    res.
+        status(HttpCode.NO_CONTENT).
+        json({ status: 'success', code: HttpCode.OK, data: {} })
 }
 
 export { registration, login, logout }
