@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import repositoryContacts from '../../repository/contacts'
 import { HttpCode } from '../../lib/constants'
-import { UploadFileService, CloudFileStorage, LocalFileStorage } from '../../service/file-storage'
+import { UploadFileService, LocalFileStorage } from '../../service/file-storage'
 
 const aggregation = async (req, res, next) => {
     const { id } = req.params
@@ -22,7 +22,7 @@ const uploadAvatar = async (req, res, next) => {
     const avatarUrl = await uploadService.updateAvatar()
     res
         .status(HttpCode.OK)
-        .json({ status: 'success', code: HttpCode.OK, message: 'Success' })
+        .json({ status: 'success', code: HttpCode.OK, data: { avatarUrl } })
 }
 
 export { aggregation, uploadAvatar }
